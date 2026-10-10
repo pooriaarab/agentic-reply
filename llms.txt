@@ -1,0 +1,15 @@
+# agentic-reply
+
+Answer inbound comments with human approval.
+
+Keywords: comments, auto-reply, inbox, agentic-suite, claude-code, codex, cli, mcp.
+
+- SDK: import { createApprovalQueue, previewReply, sendReply } from "agentic-reply".
+- CLI: agentic-reply ingest --vendor github --id c1 --author bob --text "hi".
+- MCP: run agentic-reply mcp, then call ingest_comment, approve_reply, reply_to_comment.
+
+## Docs
+
+- README: https://github.com/pooriaarab/agentic-reply
+- Core contract: https://github.com/pooriaarab/agentic-reply/blob/main/docs/agentic-core.md
+- License: MIT

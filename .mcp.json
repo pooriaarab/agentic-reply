@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "agentic-reply": {
+      "command": "npx",
+      "args": ["-y", "agentic-reply", "mcp"]
+    }
+  }
+}
