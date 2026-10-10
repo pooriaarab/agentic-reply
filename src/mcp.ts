@@ -121,7 +121,7 @@ export function createMcpServer(deps: McpDeps = {}): McpServer {
     {
       description: "Queue one inbound comment. Returns a pending draft unless a known-ask rule matches, which auto-approves it.",
       inputSchema: commentShape,
-      annotations: { readOnlyHint: true },
+      annotations: { readOnlyHint: false },
     },
     async (args) => {
       try {
