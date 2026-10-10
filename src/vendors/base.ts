@@ -33,7 +33,12 @@ export async function postJson(url: string, options: PostJsonOptions = {}): Prom
         "content-type": "application/json",
         ...options.headers,
       },
-      body: options.body === undefined ? undefined : JSON.stringify(options.body),
+      body:
+        options.body === undefined
+          ? undefined
+          : typeof options.body === "string"
+            ? options.body
+            : JSON.stringify(options.body),
       signal: AbortSignal.timeout(timeoutMs),
     });
   } catch (error) {
@@ -63,12 +68,16 @@ export function receiptFromJson(
   text: string,
 ): { adapter: string; id: string; chars: number; at: string } {
   const json = payload as { id?: unknown };
-  if (typeof json?.id !== "string" || json.id.length === 0) {
+  const rawId = json?.id;
+  if (typeof rawId !== "string" && typeof rawId !== "number") {
+    throw new VendorError(`${adapter} response carried no id`);
+  }
+  if (typeof rawId === "string" && rawId.length === 0) {
     throw new VendorError(`${adapter} response carried no id`);
   }
   return {
     adapter,
-    id: json.id,
+    id: String(rawId),
     chars: text.length,
     at: new Date().toISOString(),
   };

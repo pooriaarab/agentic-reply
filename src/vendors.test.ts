@@ -83,6 +83,15 @@ describe("github adapter", () => {
     expect(JSON.parse(calls[0].options.body ?? "{}")).toEqual({ body: "thanks" });
   });
 
+  test("accepts the numeric id GitHub returns", async () => {
+    const local = new GitHubReplyAdapter(
+      { token: "t", owner: "o", repo: "r", issueNumber: 1 },
+      { fetchFn: makeFetch(201, { id: 42 }, []) },
+    );
+    const receipt = await local.dispatch("hi");
+    expect(receipt).toMatchObject({ adapter: "github", id: "42", chars: 2 });
+  });
+
   test("throws VendorError on non-2xx", async () => {
     const local = new GitHubReplyAdapter(
       { token: "t", owner: "o", repo: "r", issueNumber: "1" },
@@ -213,9 +222,7 @@ describe("reddit adapter", () => {
     expect(calls[0].url).toBe("https://oauth.reddit.com/api/comment");
     expect(calls[0].options.headers.authorization).toBe("Bearer t");
     expect(calls[0].options.headers["user-agent"]).toBe("probe/1.0");
-    expect(calls[0].options.body).toContain("thing_id=t1_abc");
-    expect(calls[0].options.body).toContain("text=hi");
-    expect(calls[0].options.body).toContain("api_type=json");
+    expect(calls[0].options.body).toBe("thing_id=t1_abc&text=hi&api_type=json");
   });
 
   test("throws VendorError when the errors array is non-empty", async () => {
