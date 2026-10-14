@@ -1,6 +1,6 @@
 {
   "name": "agentic-reply",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Preview and send approved comment replies to GitHub, Slack, Discord, YouTube, Reddit, Mastodon, and webhooks with a TypeScript SDK, CLI, and MCP.",
   "keywords": [
     "comment-replies",
